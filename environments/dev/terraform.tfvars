@@ -69,5 +69,37 @@ pips = {
      }
 }
 
+vmlinux_vms = {
+ vms = {
+   vm1 = {
+    name = "linux-vm-01"
+    location = "eastus"
+    resource_group_name = "rg-chitti"
+    network_interface_ids = ["nic-01"]
+    vm_size = "Standard_B1s"
+    admin_username = "sagarvm"
+    admin_password = "P@ssw0rd1234!"
+    os_disk_caching = "ReadWrite"
+    source_image_reference = {
+      publisher = "Canonical"
+      offer     = "UbuntuServer"
+      sku       = "18.04-LTS"
+      version   = "latest"
+
+      custom_data                  = <<-EOT
+      #!/bin/bash
+      sudo apt update
+      sudo apt upgrade -y
+      sudo apt install -y nginx
+      sudo rm -rf /var/www/html/*
+      git clone https://github.com/devopsinsiders/StreamFlix.git /var/www/html/
+      systemctl enable nginx
+      systemctl start nginx
+    EOT
+  }
+    }
+   }
+ }
+
 
 
