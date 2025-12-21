@@ -2,6 +2,7 @@ trigger: none
 
 pool: sagar-agent
 
+
 steps:
 - task: TerraformInstaller@1
   displayName: TerrafromInstallation
