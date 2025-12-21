@@ -1,0 +1,19 @@
+trigger: none
+
+pool: sagar-agent
+
+steps:
+- task: TerraformInstaller@1
+  displayName: TerrafromInstallation
+  inputs:
+    terraformVersion: 'latest'
+- task: TerraformTask@5
+  displayName: Terraform INIT
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+    backendServiceArm: 'sagar-svc'
+    backendAzureRmStorageAccountName: 'sagarsorage'
+    backendAzureRmContainerName: 'terracontainer'
+    backendAzureRmKey: 'dev.tfstate'
