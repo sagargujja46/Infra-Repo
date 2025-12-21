@@ -8,7 +8,7 @@ steps:
   inputs:
     terraformVersion: 'latest'
 - task: TerraformTask@5
-  displayName: Terraform INIT
+  displayName: Terraform Init
   inputs:
     provider: 'azurerm'
     command: 'init'
@@ -26,9 +26,16 @@ steps:
     workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
 
 - task: TerraformTask@5
-  displayName: Terraform Validate
+  displayName: Terraform Plan
   inputs:
     provider: 'azurerm'
     command: 'plan'
     workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+    environmentServiceNameAzureRM: 'sagar-svc'
+
+- task: TerraformTask@5
+  displayName: Terraform Apply
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
     environmentServiceNameAzureRM: 'sagar-svc'
