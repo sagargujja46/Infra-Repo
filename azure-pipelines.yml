@@ -17,3 +17,18 @@ steps:
     backendAzureRmStorageAccountName: 'sagarsorage'
     backendAzureRmContainerName: 'terracontainer'
     backendAzureRmKey: 'dev.tfstate'
+
+- task: TerraformTask@5
+  displayName: Terraform Validate
+  inputs:
+    provider: 'azurerm'
+    command: 'validate'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+
+- task: TerraformTask@5
+  displayName: Terraform Validate
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+    environmentServiceNameAzureRM: 'sagar-svc'
