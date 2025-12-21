@@ -24,36 +24,36 @@ stgs = {
 
 networks = {
   "vnet1" = {
-    name ="todo-vnet"
-    location = "eastus"
+    name                = "todo-vnet"
+    location            = "eastus"
     resource_group_name = "rg-chitti"
-    address_space = ["10.0.0.0/16"]
+    address_space       = ["10.0.0.0/16"]
     subnet = {
 
-       subnet1 = {
-        name = "frontend-subnet"
+      subnet1 = {
+        name             = "frontend-subnet"
         address_prefixes = ["10.0.1.0/24"]
-       }
+      }
       subnet2 = {
-        name = "backend-subnet"
+        name             = "backend-subnet"
         address_prefixes = ["10.0.2.0/24"]
-       }
+      }
     }
   }
 }
 
 nics = {
   nic1 = {
-    subnet_name = "frontend-subnet"
+    subnet_name          = "frontend-subnet"
     virtual_network_name = "todo-vnet"
-    resource_group_name = "rg-chitti"
-    public_ip_name = ""
-    name = "nic-01"
-    location = "eastus"
-    
+    resource_group_name  = "rg-chitti"
+    public_ip_name       = ""
+    name                 = "nic-01"
+    location             = "eastus"
+
     ip_configuration = {
       ipconfig1 = {
-        name = "internal"
+        name                          = "internal"
         private_ip_address_allocation = "Dynamic"
       }
     }
@@ -62,44 +62,30 @@ nics = {
 
 pips = {
   pip1 = {
-    name = "pip1"
-    location = "eastus"
+    name                = "pip1"
+    location            = "eastus"
     resource_group_name = "rg-chitti"
-    allocation_method = "Static"
-     }
+    allocation_method   = "Static"
+  }
 }
 
-vmlinux_vms = {
- vms = {
-   vm1 = {
-    name = "linux-vm-01"
-    location = "eastus"
-    resource_group_name = "rg-chitti"
-    network_interface_ids = ["nic-01"]
-    vm_size = "Standard_B1s"
-    admin_username = "sagarvm"
-    admin_password = "P@ssw0rd1234!"
-    os_disk_caching = "ReadWrite"
-    source_image_reference = {
-      publisher = "Canonical"
-      offer     = "UbuntuServer"
-      sku       = "18.04-LTS"
-      version   = "latest"
-
-      custom_data                  = <<-EOT
-      #!/bin/bash
-      sudo apt update
-      sudo apt upgrade -y
-      sudo apt install -y nginx
-      sudo rm -rf /var/www/html/*
-      git clone https://github.com/devopsinsiders/StreamFlix.git /var/www/html/
-      systemctl enable nginx
-      systemctl start nginx
-    EOT
+linuxvm = {
+  vm1 = {
+    vm_name                      = "linux-vm-01"
+    rg_name                      = "rg-chitti"
+    location                     = "eastus"
+    vm_size                      = "Standard_B1s"
+    admin_username               = "azureuser"
+    admin_password               = "P@ssw0rd1234!"
+    nic_name                     = "nic-01"
+    os_disk_caching              = "ReadWrite"
+    os_disk_storage_account_type = "Standard_LRS"
+    vm_publisher                 = "Canonical"
+    vm_offer                     = "UbuntuServer"
+    vm_sku                       = "18.04-LTS"
+    vm_version                   = "latest"
   }
-    }
-   }
- }
+}
 
 
 

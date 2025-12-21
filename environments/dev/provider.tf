@@ -2,12 +2,18 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "4.53.0"
+      version = "4.57.0"
     }
+  }
+  backend "azurerm" {
+    resource_group_name  = "sagar-rg"
+    storage_account_name = "sagarsorage"
+    container_name       = "terracontainer"
+    key                  = "dev.tfstate"
   }
 }
 provider "azurerm" {
   features {}
-  subscription_id = "95a90f4b-7e15-47ba-95ab-0d52bac078e4"
+  subscription_id = "98473d5b-c639-404e-9bf2-91559fe65ff8"
 
 }

@@ -77,7 +77,7 @@ variable "pips" {
   }))
 }
 
-variable "vmlinux_vms" {
+variable "linuxvm" {
   description = "A map of virtual machine configurations"
   type = map(object({
     vm_name                      = string
