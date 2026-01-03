@@ -43,4 +43,8 @@ stages:
       - job: securityScanJob
         displayName: securityScan
         steps:
-        
+        - task: tfsec@1
+          displayName: TFSEC
+          inputs:
+            version: 'v1.26.0'
+            dir: '$(System.DefaultWorkingDirectory)'
