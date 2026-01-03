@@ -56,5 +56,12 @@ stages:
           continueOnError: true
           displayName: Tflint tool
           inputs:
-            script: 'tflint --recursive'
+            script: 'tflint --recursive /f junit > tflint-results.xml'
             workingDirectory: '$(System.DefaultWorkingDirectory)'
+
+        - task: PublishTestResults@2
+          displayName: tflint results publish
+          inputs:
+            testResultsFormat: 'JUnit'
+            testResultsFiles: 'tflint-results.xml'
+            testRunTitle: 'tflint results'
