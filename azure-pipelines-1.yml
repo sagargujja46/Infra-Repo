@@ -40,11 +40,20 @@ stages:
   - stage: securityScan
     displayName: security Scan
     jobs:
-      - job: securityScanJob
-        displayName: securityScan
+      - job: tfsectool
+        displayName: tfsec tool
         steps:
         - task: tfsec@1
           displayName: TFSEC
           inputs:
             version: 'v1.26.0'
             dir: '$(System.DefaultWorkingDirectory)'
+
+      - job: tflint
+        displayName: Tflint tool
+        steps:
+        - task: CmdLine@2
+          displayName: Tflint tool
+          inputs:
+            script: 'tflint --recursive'
+            workingDirectory: '$(System.DefaultWorkingDirectory)'
