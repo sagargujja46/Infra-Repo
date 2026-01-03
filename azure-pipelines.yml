@@ -1,42 +1,42 @@
-trigger: none
+# trigger: none
 
-pool: sagar-agent
+# pool: sagar-agent
 
 
-steps:
-- task: TerraformInstaller@1
-  displayName: TerrafromInstallation
-  inputs:
-    terraformVersion: 'latest'
-- task: TerraformTask@5
-  displayName: Terraform Init
-  inputs:
-    provider: 'azurerm'
-    command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
-    backendServiceArm: 'sagar-svc'
-    backendAzureRmStorageAccountName: 'sagarsorage'
-    backendAzureRmContainerName: 'terracontainer'
-    backendAzureRmKey: 'dev.tfstate'
+# steps:
+# - task: TerraformInstaller@1
+#   displayName: TerrafromInstallation
+#   inputs:
+#     terraformVersion: 'latest'
+# - task: TerraformTask@5
+#   displayName: Terraform Init
+#   inputs:
+#     provider: 'azurerm'
+#     command: 'init'
+#     workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+#     backendServiceArm: 'sagar-svc'
+#     backendAzureRmStorageAccountName: 'sagarsorage'
+#     backendAzureRmContainerName: 'terracontainer'
+#     backendAzureRmKey: 'dev.tfstate'
 
-- task: TerraformTask@5
-  displayName: Terraform Validate
-  inputs:
-    provider: 'azurerm'
-    command: 'validate'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+# - task: TerraformTask@5
+#   displayName: Terraform Validate
+#   inputs:
+#     provider: 'azurerm'
+#     command: 'validate'
+#     workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
 
-- task: TerraformTask@5
-  displayName: Terraform Plan
-  inputs:
-    provider: 'azurerm'
-    command: 'plan'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
-    environmentServiceNameAzureRM: 'sagar-svc'
+# - task: TerraformTask@5
+#   displayName: Terraform Plan
+#   inputs:
+#     provider: 'azurerm'
+#     command: 'plan'
+#     workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+#     environmentServiceNameAzureRM: 'sagar-svc'
 
-- task: TerraformTask@5
-  displayName: Terraform Apply
-  inputs:
-    provider: 'azurerm'
-    command: 'apply'
-    environmentServiceNameAzureRM: 'sagar-svc'
+# - task: TerraformTask@5
+#   displayName: Terraform Apply
+#   inputs:
+#     provider: 'azurerm'
+#     command: 'apply'
+#     environmentServiceNameAzureRM: 'sagar-svc'
