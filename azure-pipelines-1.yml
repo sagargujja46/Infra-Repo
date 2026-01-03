@@ -65,3 +65,39 @@ stages:
             testResultsFormat: 'JUnit'
             testResultsFiles: 'tflint-results.xml'
             testRunTitle: 'tflint results'
+
+  - stage: approvalAndApply
+    displayName: Approval And Apply
+    jobs:
+      - job: Approvals
+        pool: server
+        displayName: Approval
+        steps:
+        - task: ManualValidation@1
+          displayName: Manual Approver
+          inputs:
+            notifyUsers: 'sagargujja.devops@gmail.com'
+            approvers: 'sagargujja.devops@gmail.com'
+
+      - job: Apply
+        dependsOn: Approvals
+        displayName: Terraform Apply
+        steps:
+        - task: TerraformTask@5
+          displayName: Terraform init
+          inputs:
+            provider: 'azurerm'
+            command: 'init'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+            backendServiceArm: 'sagar-svc'
+            backendAzureRmStorageAccountName: 'sagarsorage'
+            backendAzureRmContainerName: 'terracontainer'
+            backendAzureRmKey: 'dev.tfstate'
+        
+        - task: TerraformTask@5
+          displayName: Terraform Apply
+          inputs:
+            provider: 'azurerm'
+            command: 'apply'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+            environmentServiceNameAzureRM: 'sagar-svc'
