@@ -1,8 +1,13 @@
+name: Infra-pipeline
+
 trigger:
 - none
 
 pool:
   sagar-agent
+
+variables: 
+  DEF_WORKING_DIR: $(System.DefaultWorkingDirectory)/environments/dev
 
 stages:
   - stage: initValidatePlan
@@ -16,7 +21,7 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'init'
-            workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+            workingDirectory: '$(DEF_WORKING_DIR)'
             backendServiceArm: 'sagar-svc'
             backendAzureRmStorageAccountName: 'sagarsorage'
             backendAzureRmContainerName: 'terracontainer'
@@ -26,14 +31,14 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'validate'
-            workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+            workingDirectory: '$(DEF_WORKING_DIR)'
     
         - task: TerraformTask@5
           displayName: Terrafrom plan
           inputs:
             provider: 'azurerm'
             command: 'plan'
-            workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+            workingDirectory: '$$(DEF_WORKING_DIR)'
             environmentServiceNameAzureRM: 'sagar-svc'
 
 
@@ -88,7 +93,7 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'init'
-            workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+            workingDirectory: '$(DEF_WORKING_DIR)'
             backendServiceArm: 'sagar-svc'
             backendAzureRmStorageAccountName: 'sagarsorage'
             backendAzureRmContainerName: 'terracontainer'
@@ -99,5 +104,5 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'apply'
-            workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+            workingDirectory: '$(DEF_WORKING_DIR)'
             environmentServiceNameAzureRM: 'sagar-svc'
