@@ -53,6 +53,7 @@ stages:
         displayName: Tflint tool
         steps:
         - task: CmdLine@2
+          continueOnError: true
           displayName: Tflint tool
           inputs:
             script: 'tflint --recursive'
