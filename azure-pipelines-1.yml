@@ -1,0 +1,46 @@
+trigger:
+- none
+
+pool:
+  sagar-agent
+
+stages:
+  - stage: initValidatePlan
+    displayName: Terraform init, Terraform validate and Terrafrom plan
+    jobs:
+      - job: initValidatePlanJob
+        displayName: Init, validate and plan
+        steps:
+        - task: TerraformTask@5
+          displayName: Terraform init
+          inputs:
+            provider: 'azurerm'
+            command: 'init'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+            backendServiceArm: 'sagar-svc'
+            backendAzureRmStorageAccountName: 'sagarsorage'
+            backendAzureRmContainerName: 'terracontainer'
+            backendAzureRmKey: 'dev.tfstate'
+        - task: TerraformTask@5
+          displayName: Terrafrom validate
+          inputs:
+            provider: 'azurerm'
+            command: 'validate'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+    
+        - task: TerraformTask@5
+          displayName: Terrafrom plan
+          inputs:
+            provider: 'azurerm'
+            command: 'plan'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+            environmentServiceNameAzureRM: 'sagar-svc'
+
+
+  - stage: securityScan
+    displayName: security Scan
+    jobs:
+      - job: securityScanJob
+        displayName: securityScan
+        steps:
+        
